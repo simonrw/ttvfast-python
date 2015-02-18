@@ -25,7 +25,7 @@ PyMODINIT_FUNC initttvfast(void)
 
 /* Takes integer and changes the value in place */
 static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args) {
-    PyObject *params_obj, *planet_obj, *epoch_obj, *time_obj, *rsky_obj, *vsky_obj, *out;
+    PyObject *params_obj, *planet_obj, *epoch_obj, *time_obj, *rsky_obj, *vsky_obj;
     double dt, Time, total;
     int n_plan, n_events, input_flag;
     int i;
@@ -100,12 +100,8 @@ static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args) {
     free(model);
     free(params);
 
-    out = PyTuple_New(5);
-    PyTuple_SetItem(out, 0, planet_obj);
-    PyTuple_SetItem(out, 1, epoch_obj);
-    PyTuple_SetItem(out, 2, time_obj);
-    PyTuple_SetItem(out, 3, rsky_obj);
-    PyTuple_SetItem(out, 4, vsky_obj);
+    Py_DECREF(item);
+    Py_DECREF(params_obj);
 
-    return out;
+    return Py_BuildValue("OOOOO", planet_obj, epoch_obj, time_obj, rsky_obj, vsky_obj);
 }
