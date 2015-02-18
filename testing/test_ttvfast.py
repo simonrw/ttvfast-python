@@ -40,7 +40,7 @@ def test_ttvfast(args):
     results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
     python_rows = zip(*results)
 
-    with open('TTVFast/c_version/output.txt') as infile:
+    with open('testing/example_output.txt') as infile:
         for i, (python_row, c_row) in enumerate(
                 zip(python_rows, infile)):
             c_row = c_row.strip().split()
