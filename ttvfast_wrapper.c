@@ -5,8 +5,8 @@
 
 void TTVFast(double *params,double dt, double Time, double total,int n_plan,CalcTransit *transit,CalcRV *RV_struct, int nRV, int n_events, int input_flag);
 
-static char module_docstring[] = "Wrapping functions code";
-static char ttvfast_docstring[] = "Change a value";
+static char module_docstring[] = "Fast TTV computation";
+static char ttvfast_docstring[] = "Run the TTV fast function. See https://github.com/kdeck/TTVFast";
 
 static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args);
 
