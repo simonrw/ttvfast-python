@@ -52,3 +52,35 @@ def test_ttvfast(args):
             assert np.allclose(vals, python_row)
 
     assert i == 374
+
+
+def test_convert_to_array(args):
+    params, Time, dt, Total, n_plan, input_flag = args
+
+    results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
+    rows = map(np.array, results)
+    assert hasattr(rows[0], 'size')
+
+
+def test_run_multiple_times(args):
+    out = []
+    for i in xrange(10):
+        params, Time, dt, Total, n_plan, input_flag = args
+        results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
+        out.append(results)
+
+        assert all([len(column) > 0 for column in results])
+
+    params, Time, dt, Total, n_plan, input_flag = args
+    results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
+
+    params, Time, dt, Total, n_plan, input_flag = args
+    results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
+
+    params, Time, dt, Total, n_plan, input_flag = args
+    results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
+
+    params, Time, dt, Total, n_plan, input_flag = args
+    results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
+
+    assert len(out) == 10

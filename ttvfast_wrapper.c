@@ -100,8 +100,5 @@ static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args) {
     free(model);
     free(params);
 
-    Py_DECREF(item);
-    Py_DECREF(params_obj);
-
     return Py_BuildValue("OOOOO", planet_obj, epoch_obj, time_obj, rsky_obj, vsky_obj);
 }
