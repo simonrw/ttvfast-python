@@ -1,0 +1,63 @@
+2/28/2014
+This directory contains the ttv_fast.for fortran subroutine
+code, as well as an example fortran code that calls ttv_fast,
+call_ttv_fast.for.  -Eric Agol
+
+If you make use of this code, please cite:
+
+Deck, Agol, Holman & Nesvorny, 2014,  ApJ, 787, 132, arXiv:1403.1895
+
+Contents:
+1) README: this file
+2) call_ttv_fast.for: Example code for calling ttv_fast.
+3) make_ttv_fast: Make file (type 'source make_ttv_fast')
+4) nbody_include.for: Include file required by ttv_fast
+5) ttv_fast.for: The fortran subroutine.
+6) ttv_fast.in:  An example input file for KOI 142 with 2 planets.
+7) ttv_fast_documentation.pdf: A brief description of the code.
+8) rvdata.txt: Times for computing radial velocity.
+
+To run the code, do the following:
+1) Edit make_ttv_fast to replace gfortran with your fortran compiler.
+2) Type 'source make_ttv_fast' from the command line.
+3) Run call_ttv_fast: 'time ./call_ttv_fast'
+On my MacBook Pro, I get the following:
+
+ttv_fast_package_v1.0$ time ./call_ttv_fast
+
+real    0m0.026s
+user    0m0.021s
+sys     0m0.003s
+
+So, the integration takes 26 milliseconds to run a 2000 day
+integration (about 200 times the orbital period of the innermost
+planet).  This time is ~halved if no RV are computed.
+
+The ttv_fast.in file contains the following:
+   number of planets = 2
+   starting time t0  = -45
+   symplectic time step = 0.5 days (should be ~1/20 of shortest period)
+   total integration time = 2000 days
+   verbose = 1 (just output transit times to file transit_times.txt)
+   mass, position (3 columns), and velocity (3 columns) for the star & five planets in barycentric code coordinates
+   code coordinates have a unit of length =  AU
+
+Example ttv_fast.in contents for KOI 142:
+2     -45.d0     0.5d0 2000.d0      1
+  2.82892071121025113e-04 -6.96243910733479117e-07  8.78810062679315619e-05 -2.95279290154732370e-05  1.24162560015721441e-06  7.97437516403848701e-06  2.77269566435821388e-05
+  8.51945612669556337e-09  1.52355574314235256e-03 -4.18722957265777167e-03 -9.48287083590683283e-02 -8.52400141554182388e-06  5.45929209714150071e-02  6.35089417271694225e-04
+  1.83208508105182432e-07  1.00422200641955535e-03 -1.35502260312309442e-01  5.00037149489728563e-02 -1.91679644881810390e-03 -1.48518730338270330e-02 -4.28426981278974967e-02
+
+Upon running, the file transit_times.txt will be created, with the following format:
+planet
+    transit number
+          transit time (days)     impact parameter (AU)  transit sky velocity (AU/day)
+0   0    -33.995004024423082      0.001521098757518      0.054678617504800
+
+A file rvdata.out with the radial velocity times and predictions (in AU/day) will
+also be created.
+
+In this case the times of transit are referenced to JD - 2,455,000.
+
+In the current version, if verbose = 2 is used, the output coordinates
+will not be accurate (they are offset by ~1/2 time step).

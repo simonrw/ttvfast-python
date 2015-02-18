@@ -1,0 +1,107 @@
+/*If you make use of this code, please cite Deck, Agol, Holman & Nesvorny, 2014,  ApJ, 787, 132, arXiv:1403.1895 */
+
+***As of May 19, 2014, the sample program run_TTVFast.c has a small bug fixed. This only affected the code when cartesian input was used. In this case, the amount of memory allocated for the structure which holds the calculated transit times, durations, etc. was not correct. This was because the memory allocated depended on the orbital periods of the planets (roughly, the number of transits ~ Sum over the planets (total time/ orbital period). with cartesian input, the orbital period is not supplied).
+
+Now, n_events is hardwired to a large number to avoid this problem. see below. 
+-----------------------------
+
+TTVFast.c - this is the main piece of code.
+Auxiliary files are: ttv-map-jacobi.c, transit.h, myintegrator.h, kepcart2.c, machine-epsilon.c
+
+The arguments for TTVFast are:
+TTVFast(parameter array, time step, t0, tfinal, number of planets, structure to hold calculated transit information, structure to hold calculated RV information, number of RV observations, size of transit array, input style flag)
+
+Depending on what type of input you want to give (the options are Jacobi elements, Astrocentric elements, Astrocentric cartesian) the form of the input parameter array will be either
+For elements: 
+G Mstar Mplanet Period E I LongNode Argument Mean Anomaly (at t=t0, the reference time)....
+repeated for each planet
+: 2+nplanets*7 in length
+or, for Cartesian:
+G Mstar Mplanet X Y Z VX VY VZ (at t=t0, the reference time)....
+repeated for each planet
+: 2+nplanets*7 in length
+
+G is in units of AU^3/day^2/M_sun, all masses are in units of M_sun, the Period is in units of days, and the angles are in DEGREES. Cartesian coordinates are in AU and AU/day. The coordinate system is as described in the paper text. One can use different units, as long as G is converted accordingly. 
+
+
+(2) time step for the integration: SHOULD NOT BE LARGER THAN  ~ 1/20 of the SHORTEST ORBITAL PERIOD. *Large eccentricities will likely require smaller steps* UNIT: days
+
+(3) t0, the reference time at which integration starts. UNIT: days
+
+(4) tfinal, the end point of integration (such that tfinal-t0 = observation time span). Again, in units of DAYS.
+
+(5) Number of planets, transiting or not.
+
+(6) structure to hold calculated transit information. This structure is a type called CalcTransit, defined in transit.h. This is allocated memory to hold information (transit time, rksy, vsky, etc.) for n_events = large number. By default this is set to 5000 - depending on how many planets you are studying and their orbital periods, this may need to be changed! If this number is not large enough to hold all transits determined by the code, you will get an error!
+
+
+Note that if there are fewer transits which actually occur during the integration, there will be unfilled spots in the CalcTransit structure. We recommend setting a DEFAULT value (as in the sample program, discussed below) so that it is obvious which spots were never filled by TTVFast.
+
+(7) The RV_model structure: also defined in transit.h. IF RV INFORMATION IS NOT DESIRED, the NULL POINTER should be passed. If RV information is desired, this should be a structure of RV_count spots with the times of RV observations. 
+
+(8) RV_count: the number of RV observations.
+
+(9) Number of spots in the array of transit structure. If for some reason there are more events that trigger the transit condition than was allocated for, the code exits and prints an error message. 
+
+(10) This is an integer flag that you set to either 0,1 or 2. No other values are accepted. A flag of 0 indicates that TTVFast should expect parameters that are Jacobi elements, flag of 1 indicates astrocentric elements, and a flag of 2 indicates astrocentric Cartesian.
+-----------------------------
+SOME FIXED PARAMETERS:
+TOLERANCE = 1e-10  /* Tolerance for root finding convergence in transit time determination */
+BAD_TRANSIT = -1 /* If the bisection method is passed a window that does not bracket the root uniquely, or if the bisection method does not converge within MAX_ITER iteractions, the code returns -1, as discussed in the paper */
+MAX_ITER /* Max number of iterations of the bisection method. If reached, code returns BAD_TRANSIT value. This is also the maximum iterations for solving Kepler's incremental equation in the Kepler step. At large eccentricties, we found that sometimes the guess for Delta E based on the previous three steps was not good, and that Newton's method would not converge. In this case we try again with a more robust guess dE = dM - if Newton's method still fails, there is an error message. Smaller time steps alleviate this problem. Note that the timestep required for stability of the integrator for very eccentric orbits is generally small enough to avoid this issue, as dicussed in the paper.*/
+-----------------------------
+Also, we suggest setting a DEFAULT value in whatever program you use to call TTV_Fast.c Unfilled spots in the transit array can be set to this, so that it is clear which returned transit values should be used. See sample program.
+-----------------------------
+
+SAMPLE PROGRAM:
+-----------------------------
+TO COMPILE:
+gcc -o run_TTVFast run_TTVFast.c TTVFast.c -lm -O3 
+-----------------------------
+If you want TTVFast to return RV data:
+in SAMPLE PROGRAM, set CALCULATE_RV = 1, then:
+SAMPLE PROGRAM requires as arguments (1) setup_file (2) Output file for Times, (3) input file for RV (4) output file for RV
+In this case, the program run_TTVFast.c reads in the times of RV observations from (3), creates an array of structures to hold RV calculations, and passes that to TTVFast.c, which then fills it. 
+If you *do not* want RV data, set CALCULATE_RV=0, then:
+SAMPLE PROGRAM requires as arguments (1) setup_file (2) Output file for Times
+IN this case, the program run_TTVFast.c does not attempt to read in a file of RV observation times, and passes a NULL pointer to TTV_Fast.c in place of the array of structures mentioned above.
+
+TO RUN SAMPLE PROGRAM:
+to produce (1) calculated TTVs & calculated RV at observed times and (2) predicted RV signal, run:
+(1)   ./run_TTVFast setup_file Times RV_file RV_out
+(2)   ./run_TTVFast setup_file Times RV_file2 RV_out2 
+
+
+some details:
+Times holds the calculated transit information. The columns are:
+PLANET  EPOCH  TIME (DAYS)  RSKY (AU)   VSKY (AU/DAY)
+RV_out holds the calculated RV information. The columns are:
+TIME (DAYS)    RADIAL VELOCITY (AU/DAY)
+The integration starts at BJD_UTC -2456000 = -1045 as specified in setup_file.
+RV_file: has times of RV measurements for KOI-142, as reported by: S. C. C. Barros et al. 2013, times are BJD_UTC-2456000
+RV_out holds the calculated radial velocities at the times in RV_file, as determined by TTVFast (in AU/day)
+RV_file2: a list of times to produce calculated RV, and RV_out2 holds the caculated RV. 
+RV_out2 holds the predictions (just the RVs calculated more frequently).
+
+****PLEASE NOTE**** The convention for radial velocities is such that when the star is moving towards us the radial velocity is negative. This is the opposite as in the code, where the star moving towards us corresponds to increasing z (since the observer is at +z). To account for this, the code returns -v_z for the radial velocity, rather than the true coordinate velocity v_z. 
+
+
+The setup file is of the form:
+IC_file_NAME (set to KOI142.in. In KOI142.in are the parameters which will be read in and passed to TTVFast in the parameter array.) IC provided by David Nesvorny, they are Jacobi elements. 
+
+t0 (reference time, set here to be -1045)
+time step (0.54 days, ~ 1/20 of the period of KOI142b)
+tfinal (tfinal-t0 = time of observation)
+number of planets = 2
+INPUT FLAG = 0
+
+If you want to try out astrocentric elements or astrocentric cartesian as input, the corresponding IC are in : KOI142.in.cartesian and KOI142.in.astro. The setup files are then setup_file_astro_cartesian or setup_file_astro_elements. They give the same integration parameters (time step, etc.) but a different IC file and input flag.
+
+
+In practice the user will likely not be reading in a file each time with this information, for example if calling TTVFast repeatedly by a minimization scheme. However all of these parameters MUST be set and passed to TTVFast. 
+
+
+the IDL program KOI_142_output.pro:
+1) produces a plot of the TTVs (TTVS_KOI_142.eps)
+2) produces a plot of the RV data from S. C. C. Barros et al. 2013, with the mean removed, the calculated RV at those times, and the overall RV signal (from RV_out2).(RV_KOI_142.eps)
+-----------------------------

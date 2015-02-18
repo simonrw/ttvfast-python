@@ -1,0 +1,5 @@
+Compile the code with
+
+py setup.py build_ext --inplace
+
+Then the package ttvfast exists (it has a .so extension.) You can add this directory to your python path if you want to run the code from elsewhere.
