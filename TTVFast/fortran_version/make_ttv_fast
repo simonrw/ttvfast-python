@@ -1,2 +1,0 @@
-gfortran -O3 -c ttv_fast.for
-gfortran -O3 call_ttv_fast.for ttv_fast.o -o call_ttv_fast
