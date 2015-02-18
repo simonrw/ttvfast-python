@@ -2,3 +2,4 @@ venv
 *.so
 *.o
 *.pyc
+build
