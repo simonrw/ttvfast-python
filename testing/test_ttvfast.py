@@ -2,9 +2,11 @@ import sys
 sys.path.insert(0, '.')
 import ttvfast
 import numpy as np
+import pytest
 
 
-def test_ttvfast():
+@pytest.fixture
+def args():
     params = [
         0.000295994511,
         0.95573417954,
@@ -28,6 +30,12 @@ def test_ttvfast():
     Total = 1700
     n_plan = 2
     input_flag = 0
+
+    return params, Time, dt, Total, n_plan, input_flag
+
+
+def test_ttvfast(args):
+    params, Time, dt, Total, n_plan, input_flag = args
 
     results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
     python_rows = zip(*results)
