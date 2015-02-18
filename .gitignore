@@ -4,3 +4,4 @@ venv
 *.pyc
 build
 files.tar.gz
+*.swp
