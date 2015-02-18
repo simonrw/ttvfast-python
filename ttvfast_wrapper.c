@@ -30,8 +30,10 @@ static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args) {
     int n_plan, n_events, input_flag;
     int i;
 
-    if (!PyArg_ParseTuple(args, "Odddiii", &params_obj, &dt, &Time, &total,
-                &n_plan, &n_events, &input_flag)) {
+    n_events = 5000;
+
+    if (!PyArg_ParseTuple(args, "Odddii", &params_obj, &dt, &Time, &total,
+                &n_plan, &input_flag)) {
         return NULL;
     }
 
@@ -40,7 +42,6 @@ static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args) {
     printf("Time: %lf\n", Time);
     printf("total: %lf\n", total);
     printf("n_plan: %d\n", n_plan);
-    printf("n_events: %d\n", n_events);
     printf("input_flag: %d\n", input_flag);
 #endif
 

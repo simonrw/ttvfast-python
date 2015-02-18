@@ -28,10 +28,8 @@ def test_ttvfast():
     Total = 1700
     n_plan = 2
     input_flag = 0
-    n_events = 5000
 
-    results = ttvfast.ttvfast(
-        params, dt, Time, Total, n_plan, n_events, input_flag)
+    results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
     python_rows = zip(*results)
 
     with open('TTVFast/c_version/output.txt') as infile:
