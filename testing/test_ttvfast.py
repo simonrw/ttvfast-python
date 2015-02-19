@@ -1,6 +1,4 @@
-import sys
-sys.path.insert(0, '.')
-import ttvfast
+from ttvfast import ttvfast
 import numpy as np
 import pytest
 
