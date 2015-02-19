@@ -5,6 +5,12 @@
 #include "transit.h"
 #include "myintegrator.h"
 
+#if PY_MAJOR_VERSION >= 3
+#define PyInteger_FromLong PyLong_FromLong
+#else
+#define PyInteger_FromLong PyInt_FromLong
+#endif
+
 void TTVFast(double *params,double dt, double Time, double total,int n_plan,CalcTransit *transit,CalcRV *RV_struct, int nRV, int n_events, int input_flag);
 
 static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args);
@@ -155,10 +161,10 @@ static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args) {
     printf("Creating output lists\n");
 #endif
     for (i=0; i<n_events; i++) {
-        item = PyInt_FromLong((model+i)->planet);
+        item = PyInteger_FromLong((model+i)->planet);
         PyList_SetItem(planet_obj, i, item);
 
-        item = PyInt_FromLong((model+i)->epoch);
+        item = PyInteger_FromLong((model+i)->epoch);
         PyList_SetItem(epoch_obj, i, item);
 
         item = PyFloat_FromDouble((model+i)->time);
