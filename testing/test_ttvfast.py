@@ -69,18 +69,6 @@ def test_run_multiple_times(args):
 
         assert all([len(column) > 0 for column in results])
 
-    params, Time, dt, Total, n_plan, input_flag = args
-    results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
-
-    params, Time, dt, Total, n_plan, input_flag = args
-    results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
-
-    params, Time, dt, Total, n_plan, input_flag = args
-    results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
-
-    params, Time, dt, Total, n_plan, input_flag = args
-    results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
-
     assert len(out) == 10
 
 
