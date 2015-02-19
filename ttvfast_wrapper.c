@@ -7,22 +7,83 @@
 
 void TTVFast(double *params,double dt, double Time, double total,int n_plan,CalcTransit *transit,CalcRV *RV_struct, int nRV, int n_events, int input_flag);
 
+static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args);
+
 static char module_docstring[] = "Fast TTV computation";
 static char ttvfast_docstring[] = "Run the TTV fast function. See https://github.com/kdeck/TTVFast";
 
-static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args);
-
-static PyMethodDef module_methods[] = {
-    {"ttvfast", ttvfast_ttvfast, METH_VARARGS, ttvfast_docstring},
-    {NULL, NULL, 0, NULL}
+struct module_state {
+    PyObject *error;
 };
 
-PyMODINIT_FUNC initttvfast(void)
+#if PY_MAJOR_VERSION >= 3
+#define GETSTATE(m) ((struct module_state*)PyModule_GetState(m))
+#else
+#define GETSTATE(m) (&_state)
+static struct module_state _state;
+#endif
+
+static PyMethodDef ttvfast_methods[] = {
+    {"ttvfast", (PyCFunction)ttvfast_ttvfast, METH_VARARGS, ttvfast_docstring},
+    {NULL, NULL}
+};
+
+#if PY_MAJOR_VERSION >= 3
+
+static int ttvfast_traverse(PyObject *m, visitproc visit, void *arg) {
+    Py_VISIT(GETSTATE(m)->error);
+    return 0;
+}
+
+static int ttvfast_clear(PyObject *m) {
+    Py_CLEAR(GETSTATE(m)->error);
+    return 0;
+}
+
+
+static struct PyModuleDef moduledef = {
+        PyModuleDef_HEAD_INIT,
+        "ttvfast",
+        module_docstring,
+        sizeof(struct module_state),
+        ttvfast_methods,
+        NULL,
+        ttvfast_traverse,
+        ttvfast_clear,
+        NULL
+};
+
+#define INITERROR return NULL
+
+PyObject *
+PyInit_ttvfast(void)
+
+#else
+#define INITERROR return
+
+void
+initttvfast(void)
+#endif
 {
-    PyObject *m = Py_InitModule3("ttvfast", module_methods, module_docstring);
-    if (m == NULL) {
-        return;
+#if PY_MAJOR_VERSION >= 3
+    PyObject *module = PyModule_Create(&moduledef);
+#else
+    PyObject *module = Py_InitModule3("ttvfast", ttvfast_methods, module_docstring);
+#endif
+
+    if (module == NULL)
+        INITERROR;
+    struct module_state *st = GETSTATE(module);
+
+    st->error = PyErr_NewException("ttvfast.Error", NULL, NULL);
+    if (st->error == NULL) {
+        Py_DECREF(module);
+        INITERROR;
     }
+
+#if PY_MAJOR_VERSION >= 3
+    return module;
+#endif
 }
 
 /* Takes integer and changes the value in place */

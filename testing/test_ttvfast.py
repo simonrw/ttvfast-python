@@ -84,3 +84,11 @@ def test_run_multiple_times(args):
     results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
 
     assert len(out) == 10
+
+
+def test_module_docstring_is_present():
+    assert 'Fast TTV computation' in ttvfast.__doc__
+
+
+def test_ttvfast_docstring_is_present():
+    assert 'https://github.com/kdeck/TTVFast' in ttvfast.ttvfast.__doc__
