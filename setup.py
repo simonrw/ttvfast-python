@@ -2,12 +2,11 @@
 
 
 from setuptools import setup, Extension
-import numpy 
 
 ttvfast = Extension("ttvfast.ttvfast",
             sources=["src/ttvfast_wrapper.c",
                 "external/TTVFast/c_version/TTVFast.c"],
-            include_dirs=['external/TTVFast/c_version', numpy.get_include()],
+            include_dirs=['external/TTVFast/c_version'],
             # Debug mode
             # define_macros=[('DEBUG', True)],
             )
