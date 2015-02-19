@@ -57,8 +57,8 @@ def test_convert_to_array(args):
     params, Time, dt, Total, n_plan, input_flag = args
 
     results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
-    rows = map(np.array, results)
-    assert hasattr(next(rows), 'size')
+    rows = list(map(np.array, results))
+    assert hasattr(rows[0], 'size')
 
 
 def test_run_multiple_times(args):
