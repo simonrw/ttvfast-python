@@ -1,6 +1,7 @@
 from ttvfast import ttvfast
 import numpy as np
 import pytest
+from six.moves import range
 
 
 @pytest.fixture
@@ -57,12 +58,12 @@ def test_convert_to_array(args):
 
     results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
     rows = map(np.array, results)
-    assert hasattr(rows[0], 'size')
+    assert hasattr(next(rows), 'size')
 
 
 def test_run_multiple_times(args):
     out = []
-    for i in xrange(10):
+    for i in range(10):
         params, Time, dt, Total, n_plan, input_flag = args
         results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
         out.append(results)
