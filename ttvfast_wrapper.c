@@ -1,5 +1,7 @@
 #include <Python.h>
+#ifdef DEBUG
 #include <stdio.h>
+#endif
 #include "transit.h"
 #include "myintegrator.h"
 
