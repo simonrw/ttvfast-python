@@ -14,6 +14,10 @@ ttvfast = Extension("ttvfast.ttvfast",
 
 setup(
         name='ttvfast',
+        version='0.0.1',
+        author='Katherine Deck',
+        maintainer='Simon Walker',
+        maintainer_email='s.r.walker101@googlemail.com',
         packages=['ttvfast', ],
         ext_modules=[ttvfast, ],
         )
