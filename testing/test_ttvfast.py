@@ -32,7 +32,7 @@ def args():
     return params, Time, dt, Total, n_plan, input_flag
 
 
-def test_ttvfast(args):
+def test_ttvfast_main_function(args):
     params, Time, dt, Total, n_plan, input_flag = args
 
     results = ttvfast.ttvfast(params, dt, Time, Total, n_plan, input_flag)
