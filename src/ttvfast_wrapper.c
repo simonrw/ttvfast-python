@@ -13,21 +13,10 @@
 
 void TTVFast(double *params,double dt, double Time, double total,int n_plan,CalcTransit *transit,CalcRV *RV_struct, int nRV, int n_events, int input_flag);
 
-static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args);
+static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args);
 
-static char module_docstring[] = "Fast TTV computation";
-static char ttvfast_docstring[] = "Run the TTV fast function. See https://github.com/kdeck/TTVFast.\n"
-    "\nProgram arguments:\n"
-    "  params: parameter list\n"
-    "  dt: time step for the integration (days)\n"
-    "  Time: start point for integration (days)\n"
-    "  Total: end point for integration (days)\n"
-    "  n_plan: number of planets to simulate\n"
-    "  input_flag:\n"
-    "    0: params are Jacobi elements\n"
-    "    1: params are astrocentric elements\n"
-    "    2: params are astrocentric Cartesian\n"
-    ;
+static char module_docstring[] = "";
+static char _ttvfast_docstring[] = "";
 
 struct module_state {
     PyObject *error;
@@ -40,19 +29,19 @@ struct module_state {
 static struct module_state _state;
 #endif
 
-static PyMethodDef ttvfast_methods[] = {
-    {"ttvfast", (PyCFunction)ttvfast_ttvfast, METH_VARARGS, ttvfast_docstring},
+static PyMethodDef _ttvfast_methods[] = {
+    {"_ttvfast", (PyCFunction)_ttvfast__ttvfast, METH_VARARGS, _ttvfast_docstring},
     {NULL, NULL}
 };
 
 #if PY_MAJOR_VERSION >= 3
 
-static int ttvfast_traverse(PyObject *m, visitproc visit, void *arg) {
+static int _ttvfast_traverse(PyObject *m, visitproc visit, void *arg) {
     Py_VISIT(GETSTATE(m)->error);
     return 0;
 }
 
-static int ttvfast_clear(PyObject *m) {
+static int _ttvfast_clear(PyObject *m) {
     Py_CLEAR(GETSTATE(m)->error);
     return 0;
 }
@@ -60,39 +49,39 @@ static int ttvfast_clear(PyObject *m) {
 
 static struct PyModuleDef moduledef = {
         PyModuleDef_HEAD_INIT,
-        "ttvfast",
+        "_ttvfast",
         module_docstring,
         sizeof(struct module_state),
-        ttvfast_methods,
+        _ttvfast_methods,
         NULL,
-        ttvfast_traverse,
-        ttvfast_clear,
+        _ttvfast_traverse,
+        _ttvfast_clear,
         NULL
 };
 
 #define INITERROR return NULL
 
 PyObject *
-PyInit_ttvfast(void)
+PyInit__ttvfast(void)
 
 #else
 #define INITERROR return
 
 void
-initttvfast(void)
+init_ttvfast(void)
 #endif
 {
 #if PY_MAJOR_VERSION >= 3
     PyObject *module = PyModule_Create(&moduledef);
 #else
-    PyObject *module = Py_InitModule3("ttvfast", ttvfast_methods, module_docstring);
+    PyObject *module = Py_InitModule3("_ttvfast", _ttvfast_methods, module_docstring);
 #endif
 
     if (module == NULL)
         INITERROR;
     struct module_state *st = GETSTATE(module);
 
-    st->error = PyErr_NewException("ttvfast.Error", NULL, NULL);
+    st->error = PyErr_NewException("_ttvfast.Error", NULL, NULL);
     if (st->error == NULL) {
         Py_DECREF(module);
         INITERROR;
@@ -104,7 +93,7 @@ initttvfast(void)
 }
 
 /* Takes integer and changes the value in place */
-static PyObject *ttvfast_ttvfast(PyObject *self, PyObject *args) {
+static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     PyObject *params_obj, *planet_obj, *epoch_obj, *time_obj, *rsky_obj, *vsky_obj;
     double dt, Time, total;
     int n_plan, n_events, input_flag;

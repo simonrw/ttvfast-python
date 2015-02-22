@@ -3,7 +3,7 @@
 
 from setuptools import setup, Extension
 
-ttvfast = Extension("ttvfast.ttvfast",
+ttvfast = Extension("ttvfast._ttvfast",
             sources=["src/ttvfast_wrapper.c",
                 "external/TTVFast/c_version/TTVFast.c"],
             include_dirs=['external/TTVFast/c_version'],
