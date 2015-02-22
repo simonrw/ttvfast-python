@@ -25,11 +25,25 @@ def planets_to_params(stellar_mass, planets, G=0.000295994511):
 
 class Planet(object):
 
+    '''
+    Planet class to define each planet in the system.
+    '''
+
     KEYS = ['mass', 'period', 'eccentricity', 'inclination',
             'longnode', 'argument', 'mean_anomaly']
 
     def __init__(self, mass, period, eccentricity, inclination,
                  longnode, argument, mean_anomaly):
+        '''
+        Construct a planet. Required arguments are:
+            * mass: Mplanet in units of M_sun
+            * period: Period in days
+            * eccentricity: E between 0 and 1
+            * inclination: I in units of degrees
+            * longnode: Longnode in units of degrees
+            * argument: Argument in units of degrees
+            * mean_anomaly: mean anomaly in units of degrees
+        '''
         self.mass = mass
         self.period = period
         self.eccentricity = eccentricity
