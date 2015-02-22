@@ -15,19 +15,8 @@ void TTVFast(double *params,double dt, double Time, double total,int n_plan,Calc
 
 static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args);
 
-static char module_docstring[] = "Fast TTV computation";
-static char _ttvfast_docstring[] = "Run the TTV fast function. See https://github.com/kdeck/TTVFast.\n"
-    "\nProgram arguments:\n"
-    "  params: parameter list\n"
-    "  dt: time step for the integration (days)\n"
-    "  Time: start point for integration (days)\n"
-    "  Total: end point for integration (days)\n"
-    "  n_plan: number of planets to simulate\n"
-    "  input_flag:\n"
-    "    0: params are Jacobi elements\n"
-    "    1: params are astrocentric elements\n"
-    "    2: params are astrocentric Cartesian\n"
-    ;
+static char module_docstring[] = "";
+static char _ttvfast_docstring[] = "";
 
 struct module_state {
     PyObject *error;

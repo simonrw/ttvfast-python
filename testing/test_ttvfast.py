@@ -42,11 +42,3 @@ def test_run_multiple_times(args):
         assert all([len(column) > 0 for column in results])
 
     assert len(out) == 10
-
-
-def test_module_docstring_is_present():
-    assert 'Fast TTV computation' in _ttvfast.__doc__
-
-
-def test_ttvfast_docstring_is_present():
-    assert 'https://github.com/kdeck/TTVFast' in _ttvfast._ttvfast.__doc__
