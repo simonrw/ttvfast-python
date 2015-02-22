@@ -24,3 +24,5 @@ def ttvfast(planets, stellar_mass, time, dt, total):
     n_plan = len(planets)
     input_flag = 0
     return _ttvfast_fn(params, time, dt, total, n_plan, input_flag)
+
+__all__ = ['ttvfast']
