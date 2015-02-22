@@ -28,3 +28,20 @@ def args():
     input_flag = 0
 
     return params, Time, dt, Total, n_plan, input_flag
+
+
+@pytest.fixture
+def python_args(args):
+    params, Time, dt, Total, n_plan, input_flag = args
+    return Time, dt, Total
+
+
+@pytest.fixture
+def params():
+    return {'mass': 0.00002878248,
+            'period': 1.0917340278625494e+01,
+            'eccentricity': 5.6159310042858110e-02,
+            'inclination': 9.0921164935951211e+01,
+            'longnode': -1.1729336712101943e-18,
+            'argument': 1.8094838714599581e+02,
+            'mean_anomaly': -8.7093652691581923e+01}

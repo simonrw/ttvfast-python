@@ -4,20 +4,20 @@
 
 
 from ._ttvfast import _ttvfast as _ttvfast_fn
+from . import models
 
 
-def ttvfast(params, time, dt, total, n_plan, input_flag):
+def ttvfast(planets, stellar_mass, time, dt, total):
     '''
     Run the TTV fast function. See https://github.com/kdeck/TTVFast.
     Program arguments:
-    * params: parameter list
-    * dt: time step for the integration (days)
+    * planets: list of `models.Planet` instances
+    * stellar_mass: stellar mass (solar masses)
     * time: start point for integration (days)
+    * dt: time step for the integration (days)
     * total: end point for integration (days)
-    * n_plan: number of planets to simulate
-    * input_flag:
-        0: params are Jacobi elements
-        1: params are astrocentric elements
-        2: params are astrocentric Cartesian
     '''
+    params = models.planets_to_params(stellar_mass, planets)
+    n_plan = len(planets)
+    input_flag = 0
     return _ttvfast_fn(params, time, dt, total, n_plan, input_flag)
