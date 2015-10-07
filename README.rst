@@ -22,10 +22,11 @@ To compute the TTV properties for one or more planets:
 
 - build a ``ttvfast.models.Planet`` instance (see the class documentation for required parameters)
 - pass a list of the planets in the system to ``ttvfast.ttvfast`` along with:
-  + the stellar mass in units of solar mass,
-  + the start point of the integration in days,
-  + the time step for the integration in days,
-  + and the end point for integration in days.
+
+  - the stellar mass in units of solar mass,
+  - the start point of the integration in days,
+  - the time step for the integration in days,
+  - and the end point for integration in days.
 
 The function ``ttvfast.ttvfast`` returns five lists:
 
