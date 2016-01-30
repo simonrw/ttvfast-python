@@ -30,7 +30,7 @@ def stellar_mass():
 
 def test_python_call(stellar_mass, planets, python_args):
     Time, dt, Total = python_args
-    results = ttvfast.ttvfast(planets, stellar_mass, dt, Time, Total)
+    results = ttvfast.ttvfast(planets, stellar_mass, Time, dt, Total)
 
     python_rows = zip(*results)
 
