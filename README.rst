@@ -37,3 +37,5 @@ The function ``ttvfast.ttvfast`` returns five lists:
 5. a list of vsky values.
 
 For more details, see the original C module's documentation: https://github.com/kdeck/TTVFast/blob/master/c_version/README
+
+Currently the RV output portion of ``TTVFast`` is not supported.
