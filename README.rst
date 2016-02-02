@@ -21,6 +21,16 @@ or clone from git::
     git submodule init
     git submodule update # grabs code from TTVFast
 
+then test that everything built properly using::
+
+    $ py.test 
+    ============================== test session starts ===============================
+    testing/test_lweiss.py .
+    testing/test_models.py ...
+    testing/test_python_api.py ...
+    testing/test_ttvfast.py ...
+
+
 Usage
 =====
 
