@@ -16,12 +16,10 @@ or install with pip:
 
 or clone from git:
 
-```
-git clone https://github.com/mindriot101/ttvfast-python.git
-cd ttvfast-python
-git submodule init
-git submodule update # grabs code from TTVFast 
-```
+
+.. code-block:: ruby
+   git submodule update # grabs code from TTVFast
+
 
 
 Usage
