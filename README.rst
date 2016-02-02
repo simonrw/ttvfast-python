@@ -14,6 +14,15 @@ or install with pip:
 
     ``pip install git+https://github.com/mindriot101/ttvfast.git``
 
+or clone from git:
+
+```
+git clone https://github.com/mindriot101/ttvfast-python.git
+cd ttvfast-python
+git submodule init
+git submodule update # grabs code from TTVFast 
+```
+
 
 Usage
 =====
