@@ -14,13 +14,12 @@ or install with pip:
 
     ``pip install git+https://github.com/mindriot101/ttvfast.git``
 
-or clone from git:
+or clone from git::
 
-
-.. code-block:: ruby
-   git submodule update # grabs code from TTVFast
-
-
+    git clone https://github.com/mindriot101/ttvfast-python.git
+    cd ttvfast-python
+    git submodule init
+    git submodule update # grabs code from TTVFast
 
 Usage
 =====
