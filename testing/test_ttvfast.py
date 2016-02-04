@@ -7,7 +7,7 @@ from six.moves import range
 def test_ttvfast_main_function(args):
     params, Time, dt, Total, n_plan, input_flag = args
 
-    results, _ = _ttvfast._ttvfast(params, dt, Time, Total, n_plan, input_flag)
+    results, _ = _ttvfast._ttvfast(params, dt, Time, Total, n_plan, input_flag, 0)
     python_rows = zip(*results)
 
     with open('testing/example_output.txt') as infile:
@@ -27,7 +27,7 @@ def test_ttvfast_main_function(args):
 def test_convert_to_array(args):
     params, Time, dt, Total, n_plan, input_flag = args
 
-    results = _ttvfast._ttvfast(params, dt, Time, Total, n_plan, input_flag)
+    results = _ttvfast._ttvfast(params, dt, Time, Total, n_plan, input_flag, 0)
     rows = list(map(np.array, results))
     assert hasattr(rows[0], 'size')
 
@@ -36,7 +36,7 @@ def test_run_multiple_times(args):
     out = []
     for i in range(10):
         params, Time, dt, Total, n_plan, input_flag = args
-        results, _ = _ttvfast._ttvfast(params, dt, Time, Total, n_plan, input_flag)
+        results, _ = _ttvfast._ttvfast(params, dt, Time, Total, n_plan, input_flag, 0)
         out.append(results)
 
         assert all([len(column) > 0 for column in results])

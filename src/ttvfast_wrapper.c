@@ -94,15 +94,15 @@ init_ttvfast(void)
 
 /* Takes integer and changes the value in place */
 static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
-    PyObject *params_obj, *planet_obj, *epoch_obj, *time_obj, *rsky_obj, *vsky_obj;
+    PyObject *params_obj, *planet_obj, *epoch_obj, *time_obj, *rsky_obj, *vsky_obj, *rv_times_obj, *rv_out_obj;
     double dt, Time, total;
-    int n_plan, n_events, input_flag;
+    int n_plan, n_events, input_flag, len_rv;
     int i;
 
     n_events = 5000;
 
-    if (!PyArg_ParseTuple(args, "Odddii", &params_obj, &dt, &Time, &total,
-                &n_plan, &input_flag)) {
+    if (!PyArg_ParseTuple(args, "Odddiii|O", &params_obj, &dt, &Time, &total,
+                &n_plan, &input_flag, &len_rv, &rv_times_obj)) {
         return NULL;
     }
 
@@ -112,6 +112,7 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     printf("total: %lf\n", total);
     printf("n_plan: %d\n", n_plan);
     printf("input_flag: %d\n", input_flag);
+    printf("len_rv: %d\n", len_rv);
 #endif
 
     /* Get the params list */
@@ -132,10 +133,21 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
         (model+i)->time = DEFAULT;
     }
 
+    CalcRV *RV_model;
+    if (len_rv) {
+        RV_model = (CalcRV*)calloc(len_rv, sizeof(CalcRV));
+        for (int i=0; i<len_rv; i++) {
+            (RV_model+i)->time = PyFloat_AsDouble(
+                    PySequence_GetItem(rv_times_obj, i));
+        }
+    } else {
+        RV_model = NULL;
+    }
+
 #ifdef DEBUG
     printf("Transit model container created\n");
 #endif
-    TTVFast(params, dt, Time, total, n_plan, model, NULL, 0, n_events, input_flag);
+    TTVFast(params, dt, Time, total, n_plan, model, RV_model, len_rv, n_events, input_flag);
 #ifdef DEBUG
     printf("Called\n");
 #endif
@@ -145,6 +157,8 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     time_obj = PyList_New(n_events);
     rsky_obj = PyList_New(n_events);
     vsky_obj = PyList_New(n_events);
+
+    rv_out_obj = PyList_New(len_rv);
 
 #ifdef DEBUG
     printf("Creating output lists\n");
@@ -166,9 +180,15 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
         PyList_SetItem(vsky_obj, i, item);
     }
 
+    for (int i=0; i<len_rv; i++) {
+        item = PyFloat_FromDouble((RV_model+i)->RV);
+        PyList_SetItem(rv_out_obj, i, item);
+    }
+
     free(model);
     free(params);
+    free(RV_model);
 
     PyObject *positions_out = Py_BuildValue("OOOOO", planet_obj, epoch_obj, time_obj, rsky_obj, vsky_obj);
-    return Py_BuildValue("OO", positions_out, Py_None);
+    return Py_BuildValue("OO", positions_out, rv_out_obj);
 }
