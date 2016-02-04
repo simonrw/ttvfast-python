@@ -23,7 +23,7 @@ def test_application(args):
 
     assert 0.9 < stellar_mass < 1.0
     results = ttvfast.ttvfast(planets, stellar_mass, Time, dt, Total)
-    python_rows = list(zip(*results))
+    python_rows = list(zip(*results['positions']))
 
     expected = [1, 7, -8.828648752325788e+02, 6.363231859868642e-03,
                 4.321183741781629e-02]

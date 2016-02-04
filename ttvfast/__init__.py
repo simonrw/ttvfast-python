@@ -23,6 +23,7 @@ def ttvfast(planets, stellar_mass, time, dt, total):
     params = models.planets_to_params(stellar_mass, planets)
     n_plan = len(planets)
     input_flag = 0
-    return _ttvfast_fn(params, dt, time, total, n_plan, input_flag)
+    positions, rv = _ttvfast_fn(params, dt, time, total, n_plan, input_flag, rv_times)
+    return {'positions': positions, 'rv': rv}
 
 __all__ = ['ttvfast']

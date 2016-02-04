@@ -169,5 +169,6 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     free(model);
     free(params);
 
-    return Py_BuildValue("OOOOO", planet_obj, epoch_obj, time_obj, rsky_obj, vsky_obj);
+    PyObject *positions_out = Py_BuildValue("OOOOO", planet_obj, epoch_obj, time_obj, rsky_obj, vsky_obj);
+    return Py_BuildValue("OO", positions_out, Py_None);
 }
