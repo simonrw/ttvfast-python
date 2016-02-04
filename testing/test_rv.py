@@ -1,7 +1,7 @@
 import numpy as np
 import ttvfast
 
-def test_stuff(stellar_mass, planets, python_args):
+def test_rv_given(stellar_mass, planets, python_args):
     rv_times = [475.40947, 481.50789, 505.56661, 508.60654, 514.56435, 533.36529,
                 537.45558, 551.44399, 582.35976, 597.30019, 611.24418, ]
 
@@ -13,3 +13,10 @@ def test_stuff(stellar_mass, planets, python_args):
     Time, dt, Total = python_args
     results = ttvfast.ttvfast(planets, stellar_mass, Time, dt, Total, rv_times=rv_times)
     assert np.allclose(results['rv'], expected)
+
+
+def test_no_rv_given(stellar_mass, planets, python_args):
+    Time, dt, Total = python_args
+    results = ttvfast.ttvfast(planets, stellar_mass, Time, dt, Total)
+    assert results['rv'] is None
+

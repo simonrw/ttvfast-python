@@ -190,5 +190,9 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     free(RV_model);
 
     PyObject *positions_out = Py_BuildValue("OOOOO", planet_obj, epoch_obj, time_obj, rsky_obj, vsky_obj);
-    return Py_BuildValue("OO", positions_out, rv_out_obj);
+    if (len_rv) {
+        return Py_BuildValue("OO", positions_out, rv_out_obj);
+    } else {
+        return Py_BuildValue("OO", positions_out, Py_None);
+    }
 }
