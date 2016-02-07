@@ -1,3 +1,4 @@
+import pytest
 import numpy as np
 import ttvfast
 
@@ -5,6 +6,7 @@ import ttvfast
 Based on a bug report supplied by Laren Weiss
 '''
 
+@pytest.mark.skipif(True, reason='Out of date API')
 def test_application(args):
     setup = args
     Time, dt, Total = setup[1:4]

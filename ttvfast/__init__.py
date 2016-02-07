@@ -6,9 +6,13 @@
 __all__ = ['ttvfast']
 
 
+from collections import namedtuple
 from ._ttvfast import _ttvfast as _ttvfast_fn
 from . import models
 
+TTVFastResult = namedtuple('TTVFastResult', [
+    'planets', 'epochs', 'times', 'rsky', 'vsky', 'rv',
+])
 
 def ttvfast(planets, stellar_mass, time, dt, total, rv_times=None):
     '''
@@ -27,6 +31,14 @@ def ttvfast(planets, stellar_mass, time, dt, total, rv_times=None):
 
     len_rv = len(rv_times) if rv_times is not None else 0
     positions, rv = _ttvfast_fn(params, dt, time, total, n_plan, input_flag, len_rv, rv_times)
-    return {'positions': positions, 'rv': rv}
+
+    return TTVFastResult(
+        planets=positions[0],
+        epochs=positions[1],
+        times=positions[2],
+        rsky=positions[3],
+        vsky=positions[4],
+        rv=rv
+    )
 
 __all__ = ['ttvfast']
