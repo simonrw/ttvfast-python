@@ -17,6 +17,22 @@ or install with pip:
 
     ``pip install git+https://github.com/mindriot101/ttvfast.git``
 
+or clone from git::
+
+    git clone https://github.com/mindriot101/ttvfast-python.git
+    cd ttvfast-python
+    git submodule init
+    git submodule update # grabs code from TTVFast
+
+then test that everything built properly using::
+
+    $ py.test 
+    ============================== test session starts ===============================
+    testing/test_lweiss.py .
+    testing/test_models.py ...
+    testing/test_python_api.py ...
+    testing/test_ttvfast.py ...
+
 
 Usage
 =====
