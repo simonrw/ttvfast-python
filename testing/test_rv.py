@@ -13,10 +13,10 @@ def test_rv_given(stellar_mass, planets, python_args):
 
     Time, dt, Total = python_args
     results = ttvfast.ttvfast(planets, stellar_mass, Time, dt, Total, rv_times=rv_times)
-    assert np.allclose(results['rv'], expected)
+    assert np.allclose(results.rv, expected)
 
 
 def test_no_rv_given(stellar_mass, planets, python_args):
     Time, dt, Total = python_args
     results = ttvfast.ttvfast(planets, stellar_mass, Time, dt, Total)
-    assert results['rv'] is None
+    assert results.rv is None
