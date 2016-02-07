@@ -19,5 +19,6 @@ setup(
         maintainer='Simon Walker',
         maintainer_email='s.r.walker101@googlemail.com',
         packages=['ttvfast', ],
+        install_requires=['numpy', ],
         ext_modules=[ttvfast, ],
         )
