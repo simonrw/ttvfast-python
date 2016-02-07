@@ -7,6 +7,7 @@ ttvfast = Extension("ttvfast._ttvfast",
             sources=["src/ttvfast_wrapper.c",
                 "external/TTVFast/c_version/TTVFast.c"],
             include_dirs=['external/TTVFast/c_version'],
+            extra_compile_args=['-std=c99'],
             # Debug mode
             # define_macros=[('DEBUG', True)],
             )

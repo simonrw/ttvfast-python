@@ -3,6 +3,9 @@ TTVFast
 =======
 :Author: Simon Walker <s.r.walker101@googlemail.com>
 
+.. image:: https://travis-ci.org/mindriot101/ttvfast-python.svg?branch=master
+    :target: https://travis-ci.org/mindriot101/ttvfast-python
+
 Installation
 ============
 
