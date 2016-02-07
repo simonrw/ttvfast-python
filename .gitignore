@@ -6,3 +6,4 @@ build
 files.tar.gz
 *.swp
 *.egg-info
+.cache
