@@ -118,6 +118,7 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     printf("len_rv: %d\n", len_rv);
 #endif
 
+
     /* Get the params list */
     double *params = malloc(sizeof(double) * (2 + n_plan * 7));
     for (i=0; i<(2 + n_plan * 7); i++) {
@@ -159,7 +160,6 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     time_obj = PyList_New(n_events);
     rsky_obj = PyList_New(n_events);
     vsky_obj = PyList_New(n_events);
-
     rv_out_obj = PyList_New(len_rv);
 
 #ifdef DEBUG
