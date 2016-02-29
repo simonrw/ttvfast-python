@@ -139,8 +139,8 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     if (len_rv) {
         RV_model = (CalcRV*)calloc(len_rv, sizeof(CalcRV));
         for (int i=0; i<len_rv; i++) {
-            (RV_model+i)->time = PyFloat_AsDouble(
-                    PyList_GetItem(rv_times_obj, i));
+            item = PyList_GetItem(rv_times_obj, i);
+            (RV_model+i)->time = PyFloat_AsDouble(item);
         }
     } else {
         RV_model = NULL;
