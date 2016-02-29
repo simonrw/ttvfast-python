@@ -97,7 +97,7 @@ init_ttvfast(void)
 
 /* Takes integer and changes the value in place */
 static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
-    PyObject *params_obj, *planet_obj, *epoch_obj, *time_obj, *rsky_obj, *vsky_obj, *rv_times_obj, *rv_out_obj;
+    PyObject *params_obj, *planet_obj, *epoch_obj, *time_obj, *rsky_obj, *vsky_obj, *rv_times_obj, *rv_out_obj, *item;
     double dt, Time, total;
     int n_plan, n_events, input_flag, len_rv;
     int i;
@@ -120,7 +120,6 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
 
     /* Get the params list */
     double *params = malloc(sizeof(double) * (2 + n_plan * 7));
-    PyObject *item;
     for (i=0; i<(2 + n_plan * 7); i++) {
         item = PySequence_GetItem(params_obj, i);
         params[i] = PyFloat_AsDouble(item);
