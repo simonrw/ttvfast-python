@@ -192,9 +192,21 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     free(RV_model);
 
     PyObject *positions_out = Py_BuildValue("OOOOO", planet_obj, epoch_obj, time_obj, rsky_obj, vsky_obj);
+
+    Py_XDECREF(planet_obj);
+    Py_XDECREF(epoch_obj);
+    Py_XDECREF(time_obj);
+    Py_XDECREF(rsky_obj);
+    Py_XDECREF(vsky_obj);
+
+    PyObject *retval;
     if (len_rv) {
-        return Py_BuildValue("OO", positions_out, rv_out_obj);
+        retval = Py_BuildValue("OO", positions_out, rv_out_obj);
+        Py_XDECREF(rv_out_obj);
     } else {
-        return Py_BuildValue("OO", positions_out, Py_None);
+        Py_INCREF(Py_None);
+        retval = Py_BuildValue("OO", positions_out, Py_None);
     }
+    Py_XDECREF(positions_out);
+    return retval;
 }
