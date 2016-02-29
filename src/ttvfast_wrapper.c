@@ -121,7 +121,7 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     /* Get the params list */
     double *params = malloc(sizeof(double) * (2 + n_plan * 7));
     for (i=0; i<(2 + n_plan * 7); i++) {
-        item = PySequence_GetItem(params_obj, i);
+        item = PyList_GetItem(params_obj, i);
         params[i] = PyFloat_AsDouble(item);
 #ifdef DEBUG
         printf("Params %d: %lf\n", i, params[i]);
