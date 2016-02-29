@@ -11,6 +11,9 @@
 #define PyInteger_FromLong PyInt_FromLong
 #endif
 
+#define STR(x) #x
+#define PRINT_REFCNT(x) (printf("Refcount for %s: %u\n", #x, Py_REFCNT(x)))
+
 void TTVFast(double *params,double dt, double Time, double total,int n_plan,CalcTransit *transit,CalcRV *RV_struct, int nRV, int n_events, int input_flag);
 
 static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args);
