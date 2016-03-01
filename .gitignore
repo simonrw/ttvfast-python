@@ -7,3 +7,5 @@ files.tar.gz
 *.swp
 *.egg-info
 .cache
+htmlcov
+.coverage
