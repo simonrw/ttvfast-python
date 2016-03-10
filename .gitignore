@@ -9,3 +9,4 @@ files.tar.gz
 .cache
 htmlcov
 .coverage
+dist
