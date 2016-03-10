@@ -12,11 +12,15 @@ A Python wrapper around Katherine Deck's TTVFast C program (https://github.com/k
 Installation
 ============
 
-Either download and compile the code with
+Install from pypi:
+
+    ``pip install ttvfast``
+
+or download and compile the code with
 
     ``python setup.py build_ext --inplace``
 
-or install with pip:
+For the latest development version, install with pip:
 
     ``pip install git+https://github.com/mindriot101/ttvfast.git``
 
