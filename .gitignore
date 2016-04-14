@@ -10,3 +10,4 @@ files.tar.gz
 htmlcov
 .coverage
 dist
+.tox
