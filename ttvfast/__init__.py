@@ -2,12 +2,11 @@
 
 "Fast TTV computation"
 
-
-__all__ = ['ttvfast']
-
-
 from ._ttvfast import _ttvfast as _ttvfast_fn
 from . import models
+
+
+__all__ = ['ttvfast']
 
 
 def ttvfast(planets, stellar_mass, time, dt, total, rv_times=None):
@@ -26,7 +25,8 @@ def ttvfast(planets, stellar_mass, time, dt, total, rv_times=None):
     input_flag = 0
 
     len_rv = len(rv_times) if rv_times is not None else 0
-    positions, rv = _ttvfast_fn(params, dt, time, total, n_plan, input_flag, len_rv, rv_times)
+    positions, rv = _ttvfast_fn(
+        params, dt, time, total, n_plan, input_flag, len_rv, rv_times)
     return {'positions': positions, 'rv': rv}
 
 __all__ = ['ttvfast']

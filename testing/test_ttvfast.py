@@ -1,6 +1,5 @@
 from ttvfast import _ttvfast
 import numpy as np
-import pytest
 from six.moves import range
 
 

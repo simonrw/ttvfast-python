@@ -5,6 +5,7 @@ import ttvfast
 Based on a bug report supplied by Laren Weiss
 '''
 
+
 def test_application(args):
     setup = args
     Time, dt, Total = setup[1:4]
@@ -15,8 +16,8 @@ def test_application(args):
 
     params = setup[0]
 
-    planet1 = ttvfast.models.Planet(*params[2:2+7])
-    planet2 = ttvfast.models.Planet(*params[2+7:])
+    planet1 = ttvfast.models.Planet(*params[2:2 + 7])
+    planet2 = ttvfast.models.Planet(*params[2 + 7:])
 
     gravity, stellar_mass = params[0:2]
     planets = [planet1, planet2]
@@ -28,4 +29,3 @@ def test_application(args):
     expected = [1, 7, -8.828648752325788e+02, 6.363231859868642e-03,
                 4.321183741781629e-02]
     assert np.allclose(python_rows[22], expected)
-

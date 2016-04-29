@@ -1,9 +1,6 @@
 import numpy as np
-import pytest
 
-from ttvfast import models
 import ttvfast
-
 
 
 def test_python_call(stellar_mass, planets, python_args):

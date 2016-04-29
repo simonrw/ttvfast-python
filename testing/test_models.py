@@ -1,5 +1,4 @@
 from numpy import allclose, isclose
-import copy
 import pytest
 
 from ttvfast import models
