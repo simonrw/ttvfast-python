@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = ttvfast
+
+[report]
+show_missing = True
+
+[paths]
+source =
+    ttvfast/
+    .tox/*/lib/python*/site-packages/ttvfast
