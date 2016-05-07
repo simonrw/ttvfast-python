@@ -4,6 +4,7 @@
 #endif
 #include "transit.h"
 #include "myintegrator.h"
+#include "ttv_errors.h"
 
 #if PY_MAJOR_VERSION >= 3
 #define PyInteger_FromLong PyLong_FromLong
@@ -14,7 +15,7 @@
 #define STR(x) #x
 #define PRINT_REFCNT(x) (printf("Refcount for %s: %u\n", #x, Py_REFCNT(x)))
 
-void TTVFast(double *params,double dt, double Time, double total,int n_plan,CalcTransit *transit,CalcRV *RV_struct, int nRV, int n_events, int input_flag);
+status_t TTVFast_main(double *params,double dt, double Time, double total,int n_plan,CalcTransit *transit,CalcRV *RV_struct, int nRV, int n_events, int input_flag);
 
 static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args);
 
@@ -101,6 +102,7 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
     double dt, Time, total;
     int n_plan, n_events, input_flag, len_rv;
     int i;
+    status_t status = STATUS_OK;
 
     n_events = 5000;
 
@@ -150,10 +152,40 @@ static PyObject *_ttvfast__ttvfast(PyObject *self, PyObject *args) {
 #ifdef DEBUG
     printf("Transit model container created\n");
 #endif
-    TTVFast(params, dt, Time, total, n_plan, model, RV_model, len_rv, n_events, input_flag);
+    status = TTVFast_main(params, dt, Time, total, n_plan, model, RV_model, len_rv, n_events, input_flag);
 #ifdef DEBUG
     printf("Called\n");
 #endif
+
+    /* Check the error status value */
+    if (status != STATUS_OK) {
+        switch (status) {
+            case STATUS_OK:
+                break;
+            case STATUS_ARGUMENT_ERROR:
+                PyErr_Format(PyExc_ValueError, "Input flag must be 0, 1, or 2.");
+                break;
+            case STATUS_MEMORY_ERROR:
+                PyErr_Format(PyExc_MemoryError, "Not enough memory allocated for Transit structure: "
+                        "more events triggering as transits than expected. "
+                        "Possibily indicative of larger problem.");
+                break;
+            case STATUS_HYPERBOLIC_ORBIT:
+                PyErr_Format(PyExc_ValueError, "Hyperbolic orbit.");
+                break;
+            case STATUS_TOO_MANY_PLANETS:
+                PyErr_Format(PyExc_ValueError, "Too many planets.");
+                break;
+            case STATUS_NON_CONVERGING:
+                PyErr_Format(PyExc_ValueError, "Kepler step not converging in MAX_ITER. "
+                        "Likely need a smaller dt.");
+                break;
+            default:
+                PyErr_Format(PyExc_ValueError, "Unknown exit status from TTVFast: %d.",
+                        (int)status);
+                break;
+        }
+    }
 
     planet_obj = PyList_New(n_events);
     epoch_obj = PyList_New(n_events);
