@@ -4,7 +4,7 @@ TTVFast
 :Author: Simon Walker <s.r.walker101@googlemail.com>
 
 .. image:: https://img.shields.io/pypi/v/ttvfast.svg?maxAge=2592000
-    :target: Open the pypi page for ttvfast
+    :target: https://pypi.python.org/pypi/ttvfast
 .. image:: https://travis-ci.org/mindriot101/ttvfast-python.svg?branch=master
     :target: https://travis-ci.org/mindriot101/ttvfast-python
 
