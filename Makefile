@@ -1,3 +1,5 @@
+TOXARGS ?=
+
 all: help
 
 help:
@@ -7,7 +9,7 @@ help:
 	@echo "- package"
 
 test:
-	py.test testing
+	tox $(TOXARGS)
 
 coverage:
 	py.test --cov ttvfast --cov-report html testing
