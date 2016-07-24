@@ -12,7 +12,7 @@ test:
 	tox $(TOXARGS)
 
 coverage:
-	py.test --cov ttvfast --cov-report html testing
+	py.test --cov ttvfast --cov-report html --cov-report term testing
 
 package:
 	python setup.py sdist bdist_wheel
