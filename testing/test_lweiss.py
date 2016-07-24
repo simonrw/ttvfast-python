@@ -1,4 +1,3 @@
-import pytest
 import numpy as np
 import ttvfast
 
@@ -7,7 +6,6 @@ Based on a bug report supplied by Laren Weiss
 '''
 
 
-@pytest.mark.skipif(True, reason='Out of date API')
 def test_application(args):
     setup = args
     Time, dt, Total = setup[1:4]
@@ -26,8 +24,13 @@ def test_application(args):
 
     assert 0.9 < stellar_mass < 1.0
     results = ttvfast.ttvfast(planets, stellar_mass, Time, dt, Total)
-    python_rows = list(zip(*results['positions']))
 
+    test_row = 22
     expected = [1, 7, -8.828648752325788e+02, 6.363231859868642e-03,
                 4.321183741781629e-02]
-    assert np.allclose(python_rows[22], expected)
+    found = [
+        results.planets[test_row], results.epochs[test_row],
+        results.times[test_row], results.rsky[test_row],
+        results.vsky[test_row]
+    ]
+    assert np.allclose(found, expected)
