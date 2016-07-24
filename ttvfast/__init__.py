@@ -9,11 +9,34 @@ from . import models
 
 __all__ = ['ttvfast']
 
-TTVFastResult = namedtuple('TTVFastResult', [
+TTVFastResultBase = namedtuple('TTVFastResultBase', [
     'planets', 'epochs', 'times', 'rsky', 'vsky', 'rv',
 ])
 
-__all__ = ['ttvfast']
+
+class TTVFastResult(TTVFastResultBase):
+    def __len__(self):
+        '''Enables the `len` function to work'''
+        return self.times.size
+
+    def row(self, index):
+        '''Return a single entry into the results array'''
+        if index >= len(self):
+            raise IndexError(
+                "Index {index} out of bounds for array length {length}".format(
+                    index=index, length=len(self)))
+
+        arr = [
+            self.planets[index],
+            self.epochs[index],
+            self.times[index],
+            self.rsky[index],
+            self.vsky[index],
+        ]
+        if self.rv is not None:
+            arr.append(self.rv[index])
+
+        return arr
 
 
 def ttvfast(planets, stellar_mass, time, dt, total, rv_times=None):
