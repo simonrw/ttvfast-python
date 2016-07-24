@@ -2,6 +2,7 @@ import numpy as np
 
 import ttvfast
 
+
 def check_against_output_file(results):
     '''
     Function to check the output of `ttvfast` with the example output file
@@ -24,6 +25,7 @@ def check_against_output_file(results):
             assert np.allclose(result, expected)
 
     assert i == 374
+
 
 def test_python_call(stellar_mass, planets, python_args):
     Time, dt, Total = python_args

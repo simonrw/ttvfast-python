@@ -2,14 +2,12 @@
 
 "Fast TTV computation"
 
-
-__all__ = ['ttvfast']
-
-
 from collections import namedtuple
 import numpy as np
 from ._ttvfast import _ttvfast as _ttvfast_fn
 from . import models
+
+__all__ = ['ttvfast']
 
 TTVFastResult = namedtuple('TTVFastResult', [
     'planets', 'epochs', 'times', 'rsky', 'vsky', 'rv',
@@ -34,7 +32,8 @@ def ttvfast(planets, stellar_mass, time, dt, total, rv_times=None):
     input_flag = 0
 
     len_rv = len(rv_times) if rv_times is not None else 0
-    positions, rv = _ttvfast_fn(params, dt, time, total, n_plan, input_flag, len_rv, rv_times)
+    positions, rv = _ttvfast_fn(params, dt, time, total, n_plan,
+                                input_flag, len_rv, rv_times)
 
     return TTVFastResult(
         planets=np.array(positions[0]),
