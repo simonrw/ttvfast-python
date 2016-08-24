@@ -29,6 +29,7 @@ setup(
     author_email='s.r.walker101@googlemail.com',
     license='GPL',
     packages=['ttvfast', ],
+    install_requires=['numpy', ],
     ext_modules=[ttvfast, ],
     classifiers=[
         'Development Status :: 3 - Alpha',
