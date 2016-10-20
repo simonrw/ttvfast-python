@@ -16,11 +16,10 @@ Required arguments are:
 '''
 
 
-def planets_to_params(stellar_mass, planets, G=0.000295994511):
-    out = [G, stellar_mass]
-    for planet in planets:
-        out.extend([getattr(planet, key) for key in Planet.KEYS])
-    return out
+try:
+    from typing import List, Any  # noqa: F401
+except ImportError:
+    pass
 
 
 class Planet(object):
@@ -34,6 +33,7 @@ class Planet(object):
 
     def __init__(self, mass, period, eccentricity, inclination,
                  longnode, argument, mean_anomaly):
+        # type: (float, float, float, float, float, float, float) -> None
         '''
         Construct a planet. Required arguments are:
             * mass: Mplanet in units of M_sun
@@ -51,3 +51,11 @@ class Planet(object):
         self.longnode = longnode
         self.argument = argument
         self.mean_anomaly = mean_anomaly
+
+
+def planets_to_params(stellar_mass, planets, G=0.000295994511):
+    # type: (float, List[Planet], float) -> List[float]
+    out = [G, stellar_mass]
+    for planet in planets:
+        out.extend([getattr(planet, key) for key in Planet.KEYS])
+    return out

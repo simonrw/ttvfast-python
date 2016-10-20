@@ -4,12 +4,24 @@
 
 from ._ttvfast import _ttvfast as _ttvfast_fn
 from . import models
+try:
+    from typing import List, Dict, Any, Optional  # noqa: F401
+except ImportError:
+    pass
 
 
-__all__ = ['ttvfast']
+__all__ = ['ttvfast']  # type: List[str]
 
 
-def ttvfast(planets, stellar_mass, time, dt, total, rv_times=None, input_flag=0):
+def ttvfast(planets,  # type: List[models.Planet]
+            stellar_mass,  # type: float
+            time,  # type: float
+            dt,  # type: float
+            total,  # type: float
+            rv_times=None,  # type: Optional[List[float]]
+            input_flag=0  # type: int
+            ):
+    # type: (...) -> Dict[str, List[float]]
     '''
     Run the TTV fast function. See https://github.com/kdeck/TTVFast.
     Program arguments:
@@ -36,5 +48,3 @@ def ttvfast(planets, stellar_mass, time, dt, total, rv_times=None, input_flag=0)
     positions, rv = _ttvfast_fn(
         params, dt, time, total, n_plan, input_flag, len_rv, rv_times)
     return {'positions': positions, 'rv': rv}
-
-__all__ = ['ttvfast']
