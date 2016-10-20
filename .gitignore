@@ -11,3 +11,5 @@ htmlcov
 .coverage
 dist
 .tox
+.mypy_cache
+htmlmypy
