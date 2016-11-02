@@ -21,7 +21,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as infile:
 
 setup(
     name='ttvfast',
-    version='0.2.0',
+    version='0.2.1',
     description='Python wrapper to ttvfast',
     url='https://github.com/mindriot101/ttvfast-python',
     long_description=long_description,
