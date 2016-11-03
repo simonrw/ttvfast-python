@@ -19,9 +19,13 @@ ttvfast = Extension("ttvfast._ttvfast",
 with open(path.join(here, 'README.rst'), encoding='utf-8') as infile:
     long_description = infile.read()
 
+version = {}
+with open(path.join(here, 'ttvfast', 'version.py')) as infile:
+    exec(infile.read(), version)
+
 setup(
     name='ttvfast',
-    version='0.2.1',
+    version=version['__version__'],
     description='Python wrapper to ttvfast',
     url='https://github.com/mindriot101/ttvfast-python',
     long_description=long_description,
