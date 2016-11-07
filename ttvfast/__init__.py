@@ -4,7 +4,7 @@
 
 from ._ttvfast import _ttvfast as _ttvfast_fn
 from . import models
-from .version import __version__
+from .version import __version__  # noqa
 try:
     from typing import List, Dict, Any, Optional  # noqa: F401
 except ImportError:
