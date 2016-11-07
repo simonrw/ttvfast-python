@@ -10,6 +10,8 @@ TTVFast
 
 A Python wrapper around Katherine Deck's TTVFast C program (https://github.com/kdeck/TTVFast)
 
+For the latest changes, see `the CHANGELOG <https://github.com/mindriot101/ttvfast-python/blob/master/CHANGELOG.rst>`_.
+
 
 Installation
 ============
