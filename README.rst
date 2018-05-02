@@ -16,26 +16,33 @@ For the latest changes, see `the CHANGELOG <https://github.com/mindriot101/ttvfa
 Installation
 ============
 
+For contributing to the package, see the `Development instructions`_.
+
 Install from pypi:
 
     ``pip install ttvfast``
-
-or download and compile the code with
-
-    ``python setup.py build_ext --inplace``
 
 For the latest development version, install with pip:
 
     ``pip install git+https://github.com/mindriot101/ttvfast.git``
 
-or clone from git::
+Development instructions
+------------------------
+
+To contribute to ``ttvfast``, clone the repository and fetch the submodule::
 
     git clone https://github.com/mindriot101/ttvfast-python.git
     cd ttvfast-python
     git submodule init
     git submodule update # grabs code from TTVFast
 
-then test that everything built properly using::
+install the package, in "development mode" into the current python environment::
+
+    pip install -e .
+
+This way any python code changes made to the current directory will be reflected in the package. Note: any changes to the C code require recompilation by reinstalling the package with ``pip install -e .`` (see the `editable install documentation <https://pip.pypa.io/en/stable/reference/pip_install/#editable-installs>`_ documentation for more information).
+
+Once the package is installed, test that everything built properly using::
 
     $ py.test 
     ============================== test session starts ===============================
