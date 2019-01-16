@@ -1,11 +1,9 @@
 language: python
 cache: pip
 python:
-  - "2.6"
   - "2.7"
-  - "3.5"
   - "3.6"
 install:
-  - "pip install pytest six numpy pytest-cov"
+  - "pip install -r requirements.txt"
   - "pip install ."
-script: py.test testing
+script: pytest testing
